@@ -54,6 +54,33 @@ Para fechar nosso assunto de rotas, temos a possibilidade de criar guardas, que 
 
 Estas guardas são cumulativas, ou seja, você pode ter vários arquivos de guardas, e todos eles seguem um mesmo padrão, implementam CanActivate e tem um método apenas, chamado também CanActivate, que retorna verdadeiro ou falso, informando se o usuário pode ou não chegar a esta página.
 
+a implementação na rota fica dessa forma:
+
+const routes: Routes = [
+  { path:'inicio', component: InicioComponent},
+ ** {path:'sobre', component: SobreComponent, canActivate:[AuthGuard]}, <-**
+  {path:'', redirectTo:'inicio', pathMatch:'full'},
+  {path:'**',component: Error404Component}
+
+];
+
+O arquivo auth.guard também é implementado:
+
+
+export class AuthGuard implements CanActivate {
+  //variavel de acesso
+  acesso:boolean=false;//não terá acesso se for false, só teremos acesso a essa rota se for true <--
+
+  //método
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return this.acesso; <---
+  }
+  
+
+
+
 
 A função Guard essa função serve para você basicamente salvar as suas rotas, e não deixar que elas
 fiquem expostas; Ou seja dependendo se a função é true ou false podemos ter acesso a página;
@@ -61,3 +88,30 @@ fiquem expostas; Ou seja dependendo se a função é true ou false podemos ter a
 através do comando ng g g Auth  -> geramos o auth.guard
 
 ![image](https://user-images.githubusercontent.com/52088444/169629203-3e5f46a8-039f-4147-9e35-7a4bb239496b.png)
+
+
+## Implementado o Bootstrap
+
+O bootstrap foi criado pelo o twiter para que desenvolvedores possam ter os complementos web como botões,
+fomulários, abas e etc de maneira muito simples. Uma estrutura ampla e de fácil acesso.
+
+O Angular utiliza o jQuery, mas não é indicada, ele indica usar o typescript.
+
+A npm disponibiliza a instalaçaõ do boortrap sem que você tenha que baixar do site oficial.
+
+npm i bootstrap
+
+A instalação ficará na página node_modules. Temos que incluir o path do bootstrap, no arquivo angular.json
+
+  "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",<-
+              "src/styles.css"
+
+
+## Bootstrap de efeitos específicos do angular
+
+- https://ng-bootstrap.github.io/#/home
+
+- ng add @ng-bootstrap/ng-bootstrap
+
+
