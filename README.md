@@ -1,27 +1,63 @@
-# Exemplo08
+# Start By Capgemini - Angular - Rotas
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.5.
+## O que é uma Rota?
 
-## Development server
+É um carregamento dinâmico de páginas. As rotas executam uma pagina,ela abre a página, mas não existe o loading
+é tudo em tempo real. Eu posso clicar em um link, se esse link for uma rota, ele abre automaticamente, sem que
+faça com que o browser atualize a página, isso garante que o sistema em angular seja muito rápido.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Quando você trabalha com rotas no angular é criado um novo componente chamado:app-routing.module. No nosso html aparece uma nova tag '<router-outlet></router-outlet>' esse componente é a exibição dos componentes, nesse
+caso o sobre e inicio que foi criado.
 
-## Code scaffolding
+## Implementando Rotas
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Acessar o arquivo app-routing.module.ts , todas as páginas que queremos que estejam em rotas nós seguimos o padrão a baixo:
 
-## Build
+const routes: Routes = [
+  {path:'inicio', component: InicioComponent},
+  {path:'sobre', component: SobreComponent}
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+];
 
-## Running unit tests
+*path é o nome da rota, ou seja o nome que eu inclui no routerLink="/inicio" *
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+As boas práticas do Angular indicam utilizarmos aspas simples e não duplas.
 
-## Running end-to-end tests
+Se por acaso removermos a rota da url, aparece uma pagina em branco, para resolver esse problemas  criamos 
+uma rota vazia , redirecionamos, e incluo um pathMatch. O pathMatch é mais um desses atributos, ele serve para verificar o caminho, e pode receber o valor 'prefix' (por default recebe esse valor) ou 'full', como no nosso caso.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+**essa é uma rota padrão**
 
-## Further help
+const routes: Routes = [
+  { path:'inicio', component: InicioComponent},
+  {path:'sobre', component: SobreComponent},
+  {path:'', redirectTo:'inicio', pathMatch:'full'}
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+];
+
+## Rotas de Erro
+
+Para criar uma rota de erro é necessário criar um component e incluir a rota semelhantes fizemos nos outros 
+componentes.
+Em Angular '**' quer dizer que não tem a url correspondente ao componente.
+
+const routes: Routes = [
+  { path:'inicio', component: InicioComponent},
+  {path:'sobre', component: SobreComponent},
+  {path:'', redirectTo:'inicio', pathMatch:'full'},
+  {path:'**',component: Error404Component} <-
+];
+
+## Função Guard
+
+Para fechar nosso assunto de rotas, temos a possibilidade de criar guardas, que permitem ou não o acesso a determinadas rotas.
+
+Estas guardas são cumulativas, ou seja, você pode ter vários arquivos de guardas, e todos eles seguem um mesmo padrão, implementam CanActivate e tem um método apenas, chamado também CanActivate, que retorna verdadeiro ou falso, informando se o usuário pode ou não chegar a esta página.
+
+
+A função Guard essa função serve para você basicamente salvar as suas rotas, e não deixar que elas
+fiquem expostas; Ou seja dependendo se a função é true ou false podemos ter acesso a página;
+
+através do comando ng g g Auth  -> geramos o auth.guard
+
+image.png
