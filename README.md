@@ -60,4 +60,4 @@ fiquem expostas; Ou seja dependendo se a função é true ou false podemos ter a
 
 através do comando ng g g Auth  -> geramos o auth.guard
 
-image.png
+![image](https://user-images.githubusercontent.com/52088444/169629203-3e5f46a8-039f-4147-9e35-7a4bb239496b.png)
